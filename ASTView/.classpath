@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/lib/commons-configuration-1.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/lib/commons-lang-2.5.jar"/>
@@ -14,6 +23,24 @@
 	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/lib/org.eclipse.equinox.preferences_3.2.301.R35x_v20091117.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/lib/org.eclipse.jdt.core_3.5.2.v_981_R35x.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/lib/org.eclipse.osgi_3.5.2.R35x_v20100126.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jgraphx-master"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/antlr4-runtime-4.7.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/commons-lang3-3.8.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/commons-text-1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/fastutil-8.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/guava-26.0-jre.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgrapht-bundle-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgrapht-core-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgrapht-demo-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgrapht-ext-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgrapht-guava-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgrapht-io-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgrapht-opt-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jgraphx-3.4.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Baptiste/Desktop/M2/evolution/jgrapht-1.3.0/jgrapht-1.3.0/lib/jheaps-0.9.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
