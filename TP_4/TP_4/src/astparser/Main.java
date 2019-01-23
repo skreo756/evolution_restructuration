@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import java.io.BufferedReader;
 
 import org.jgrapht.*;
-import org.jgrapht.demo.JGraphXAdapterDemo;
 import org.jgrapht.ext.JGraphXAdapter;
 import org.jgrapht.graph.*;
 import org.jgrapht.io.ComponentNameProvider;
@@ -12,14 +11,8 @@ import org.jgrapht.io.GraphExporter;
 // import org.jgrapht.io.*;
 import org.jgrapht.traverse.*;
 
-import com.mxgraph.swing.mxGraphComponent;
-
-import javax.swing.JApplet;
-import javax.swing.JFrame;
-
 import com.mxgraph.layout.mxCircleLayout;
-import com.mxgraph.model.mxGraphModel;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.swing.mxGraphComponent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,6 +31,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.swing.JApplet;
+import javax.swing.JFrame;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -55,32 +50,17 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 
  
 
-public class Main extends JApplet {
-	
-	private static JGraphXAdapter<String, DefaultEdge> jgxAdapter;
+public class Main extends JApplet{
 	
 	private static final Dimension DEFAULT_SIZE = new Dimension(1000, 800);
+
+    private JGraphXAdapter<String, DefaultEdge> jgxAdapter;
  
 	private final  static int PERCENT = 10;
 	
 	private final  static int X = 2;
 	
-	private static  int classCounter = 0;
-	private static  int lineCounter = 0;
-	private static  int methodCounter = 0;
-	
-	
 
-	
-	private static List<String> percentClassWithManyMethods = new ArrayList<String>();
-	private static List<String> percentClassWithManyAttributes = new ArrayList<String>();
-
-	private static Collection<String> classWithManyMethodsAndAttributes = new ArrayList<String>();	
-	private static Collection<String> classWithMoreThanXMethods = new ArrayList<String>();
-	private static Collection<String> percentMethodsWithLargestCode = new ArrayList<String>();
-	
-	private static List<String> ClassWithManyAttributesName = new ArrayList<String>();
-	private static List<String> ClassWithManyMethodsName = new ArrayList<String>();
 	
 	
 	private static List<String> packages = new ArrayList<String>();	
@@ -93,9 +73,7 @@ public class Main extends JApplet {
 	private static  TreeSet<CustomType> classWithManyMethods = new TreeSet<CustomType>();
 	private static  TreeSet<CustomType> classWithManyAttributes = new TreeSet<CustomType>();
 	private static  TreeSet<CustomType> methodsWithLargestCode = new TreeSet<CustomType>();
-	
-	private static  int attributeCounter = 0;
-	private static  int methodLineCounter = 0;
+
 	
 	
 	
@@ -142,23 +120,14 @@ public class Main extends JApplet {
 				if (localLineCounter == 0) {
 					localLineCounter += node.toString().length() - node.toString().replace("\n", "").length();
 				}
-				
-				lineCounter += localLineCounter;
-				classCounter++;
-				
-				attributeCounter += node.getFields().length;
-				
+	
 				classWithManyAttributes.add(new CustomType (className.toString(), node.getFields().length));
 				
 				if (node.getMethods().length > X) {
-					classWithMoreThanXMethods.add(className.toString());
 				}
 				
 				classWithManyMethods.add(new CustomType(className.toString(), node.getMethods().length));
-				
-				methodCounter += node.getMethods().length;
-				
-				
+
 				for (MethodDeclaration m : node.getMethods()) {
 					
 						if (m.parameters().size() > maximumMethodParameter)
@@ -171,7 +140,7 @@ public class Main extends JApplet {
 					
 					
 				
-						methodLineCounter += localLineCounter;
+					//	methodLineCounter += localLineCounter;
 						
 						
 						
@@ -183,19 +152,11 @@ public class Main extends JApplet {
 						if(tree.get(node.getName().toString()).declarationInvocations
 								.get(m.getName().toString()) == null) {						
 							tree.get(node.getName().toString()).declarationInvocations
-							.put(m.getName().toString(), new TreeSet<Node>()); 
-							
-						}
-						
-								 
-					
-				}
-		
+							.put(m.getName().toString(), new TreeSet<Node>()); 							
+						}														 					
+				}		
 				return true;				
-			}
-			
-			
-			
+			}									
 			public boolean visit (MethodInvocation methodInvocation) {
 				
 				try {
@@ -263,92 +224,15 @@ public class Main extends JApplet {
 		});
  
 	}
-	
-	
-	private static void percentOfClassWithManyAttributs()
-	{
-		int numberToSelect = (classCounter * 50) / 100;
-		int counter = 0;
-		
 
-		for(CustomType customType : classWithManyAttributes)
-			if(counter != numberToSelect)
-			{
-				percentClassWithManyAttributes.add(customType.toString());
-				counter++;
-				ClassWithManyAttributesName.add(customType.getName());
-			}
-			else {
-				System.out.println(percentClassWithManyAttributes);
-				return;
-				
-			}
-				
-	}
-	
-	
-	
-	private static void percentOfClassWithManyMethods() {
-		
-		int numberToSelect = (classCounter * 50) /100;
-		int counter = 0;
-		
-		for (CustomType customType : classWithManyMethods)
-			if (counter != numberToSelect)
-			{
-				percentClassWithManyMethods.add(customType.toString());
-				counter++;
-				ClassWithManyMethodsName.add(customType.getName());
-			}
-			else {
-				System.out.println(percentClassWithManyMethods);
-				return;
-			}
-		
-	}
-	
-	private static void percentOfMethodsWithLargestCode()
-	{
-		int numberToSelect = (methodCounter * PERCENT) / 100;
-
-		int counter = 0;
-		
-		for(CustomType customType : methodsWithLargestCode)
-			if(counter != numberToSelect)
-			{
-				percentMethodsWithLargestCode.add(customType.toString());
-				counter++;
-			}
-			else {
-				System.out.println(percentMethodsWithLargestCode);
-				return;
-			}			
-	}
-	
-	
-	private static void classWithManyAttributesAndMethods() {
-		for (String methods : ClassWithManyMethodsName) {
-			for (String attributes : ClassWithManyAttributesName) {
-				if (methods.equals(attributes)) {
-					classWithManyMethodsAndAttributes.add(methods.toString());				
-				}
-			}
-					
-		}
-		System.out.println(classWithManyMethodsAndAttributes);		
-	}
-	
-	private String renderStringGraph(Graph<String, DefaultEdge> stringGraph)
+	private static String renderStringGraph(Graph<String, MyWeightedEdge> stringGraph)
 	        throws ExportException, org.jgrapht.io.ExportException
 	    {
-
-	        // use helper classes to define how vertices should be rendered,
-	        // adhering to the DOT language restrictions
+	       
 	        ComponentNameProvider<String> vertexIdProvider = new ComponentNameProvider<String>()
 	        {
 	           
-
-				@Override
+	        	@Override
 				public String getName(String st) {
 					return st.toString();
 				}
@@ -360,7 +244,7 @@ public class Main extends JApplet {
 	                return st.toString();
 	            }
 	        };
-	        GraphExporter<String, DefaultEdge> exporter =
+	        GraphExporter<String, MyWeightedEdge> exporter =
 	        new DOTExporter<>(vertexIdProvider, vertexLabelProvider, null);
 	        Writer writer = new StringWriter();
 	        exporter.exportGraph(stringGraph, writer);
@@ -370,57 +254,124 @@ public class Main extends JApplet {
 	    }
 	
 	
-	private Graph createGraph(List<String> Classes) throws ExportException, org.jgrapht.io.ExportException, FileNotFoundException {
+	
+	static int Metrique (String class1, String class2) {
+		
+	ArrayList<String> a_b = new ArrayList<String>();
+	ArrayList<String> b_a = new ArrayList<String>();	
+	
+		
+		for (Map.Entry<String, Tree> entry : tree.entrySet()) {
+	 			 
+			 if (entry.getKey().equals(class1)) {					 								 
+				for (Map.Entry<String, Set<Node>> declarationInvocation :entry.getValue().declarationInvocations.entrySet()) {
+					
+					String Node = declarationInvocation.getKey().toString();
+					//System.out.println(Node);
+					
+					for (Node treeNode : declarationInvocation.getValue()) {
+						String MethodCalled  = treeNode.methodName;
+																
+						for (Map.Entry<String,Tree> entry2 : tree.entrySet()) {
+							if (entry2.getKey().equals(class2)) {
+								for (Map.Entry<String, Set<Node>> declarationInvocation2 :entry2.getValue().declarationInvocations.entrySet()) {
+									String Node2 = declarationInvocation2.getKey().toString();
+									
+									
+									if (Node2.equals(MethodCalled)) {							
+										a_b.add(Node2);
+									}									
+								}								
+							}
+						}
+					}
+				}
+				
+			}	
+		}
+		
+		for (Map.Entry<String, Tree> entry : tree.entrySet()) {
+			 
+			 if (entry.getKey().equals(class2)) {					 								 
+				for (Map.Entry<String, Set<Node>> declarationInvocation :entry.getValue().declarationInvocations.entrySet()) {
+					
+					String Node = declarationInvocation.getKey().toString();
+					
+					
+					for (Node treeNode : declarationInvocation.getValue()) {
+						String MethodCalled  = treeNode.methodName;
+																
+						for (Map.Entry<String,Tree> entry2 : tree.entrySet()) {
+							if (entry2.getKey().equals(class1)) {
+								for (Map.Entry<String, Set<Node>> declarationInvocation2 :entry2.getValue().declarationInvocations.entrySet()) {
+									String Node2 = declarationInvocation2.getKey().toString();
+									
+									
+									if (Node2.equals(MethodCalled)) {							
+										b_a.add(Node2);
+									}
+									
+								}
+								
+							}
+						}
+					}
+				}
+				
+			}	
+		}
+		System.out.println("Méthodes de la classe " + class2  + " appelées par la classe " + class1 +" "+  a_b);
+		System.out.println("Méthodes de la classe " + class1  + " appelées par la classe " + class2 +" "+ b_a);
+		
+		int nbAppels = a_b.size() + b_a.size();
+		System.out.println("Nombre d'appels de méthodes entres les 2 classes : " +nbAppels);
+		return nbAppels;
+	}
+	
+	
+	private static Graph createWeightedGraph(List<String> Classes) throws ExportException, org.jgrapht.io.ExportException, FileNotFoundException {
 		
 		String root = "root";
 		
-		ListenableGraph <String, DefaultEdge> g = new DefaultListenableGraph<>(new DefaultDirectedGraph<>(DefaultEdge.class));
+		Graph <String, MyWeightedEdge> g = new DefaultDirectedWeightedGraph(MyWeightedEdge.class);
 		
 		g.addVertex(root);
 		
 		for (String classes : Classes) {
-		
-					
-			String className = classes;
+						
 			
-			g.addVertex(className);
-			g.addEdge(root, className);
+			g.addVertex(classes);
+			MyWeightedEdge e1 = (MyWeightedEdge) g.addEdge(root, classes);
+			//g.setEdgeWeight(e1,5);
 			
-			 for (Map.Entry<String, Tree> entry : tree.entrySet()) {
-				 				 			 			 
-				 if (entry.getKey().equals(className)) {					 								 
-					for (Map.Entry<String, Set<Node>> declarationInvocation :entry.getValue().declarationInvocations.entrySet()) {
+			for( String className2 : Classes) {
+				if (classes != className2) {
 								
-						String Node = declarationInvocation.getKey().toString();		
+					if (g.getEdge(classes, className2) == null) {
+						g.addVertex(className2);
 						
-						g.addVertex(Node);
-						g.addEdge(className, Node);
-						
-						
-						for (Node treeNode : declarationInvocation.getValue()) {
-							
-							g.addVertex(treeNode.methodName);
-							
-							g.addEdge(Node, treeNode.methodName);
-						}						
-					}				 				
-				 }		
-			 }
+						int m = Metrique (className2 , classes);
+						if (m != 0) {
+						  MyWeightedEdge e2 = (MyWeightedEdge) g.addEdge(classes, className2);
+						  g.setEdgeWeight(e2, Metrique(className2, classes));
+						}				
+					}										
+				}				
+			} 											 		
 		}
-								 	
+				
 		System.out.println(g.toString());			
 		PrintWriter writer = new PrintWriter("graph.dot");
 		writer.print(renderStringGraph(g));
 		writer.close();
 		return g;
-		
 	}
 	
 	
-	public void init(List<String> classes) throws ExportException, FileNotFoundException, org.jgrapht.io.ExportException {
+public void init(List<String> classes) throws ExportException, FileNotFoundException, org.jgrapht.io.ExportException {
 		
 		
-		Graph g = createGraph(classes);
+		Graph g = createWeightedGraph(classes);
 		
 		 jgxAdapter = new JGraphXAdapter<>(g);
 
@@ -431,7 +382,7 @@ public class Main extends JApplet {
 	        getContentPane().add(component);
 	        mxCircleLayout layout = new mxCircleLayout(jgxAdapter);
 	        
-	        int radius = 300;
+	        int radius = 100;
 	        layout.setX0((DEFAULT_SIZE.width / 2.0) - radius);
 	        layout.setY0((DEFAULT_SIZE.height / 2.0) - radius);
 	        layout.setRadius(radius);
@@ -440,6 +391,7 @@ public class Main extends JApplet {
 	        layout.execute(jgxAdapter.getDefaultParent());
 		
 	}
+	
 		
 	
 	//read file content into a string
@@ -492,74 +444,18 @@ public class Main extends JApplet {
 	public static void main(String[] args) throws IOException, org.jgrapht.io.ExportException {
 		
 		
-		// ParseFilesInDir("C:\\\\Users\\\\Baptiste\\\\eclipse-workspace\\\\Multiplication");
-		// ParseFilesInDir("C:\\\\Users\\\\Baptiste\\\\Desktop\\M2\\\\METHODES_FORMELLES\\\\Resolution");
-		 ParseFilesInDir("C:\\Users\\Baptiste\\Desktop\\M2\\composant\\CorrigeTPJavaBeans");
+		 ParseFilesInDir("C:\\\\Users\\\\Baptiste\\\\eclipse-workspace\\\\Multiplication");
 		 
-		//1
-		System.out.println("Nombre de classe : " + classCounter);
-		System.out.println("Liste des classes : " + Classes);
-		
-		//2
-		System.out.println("Nombre de lignes de code : "+ lineCounter);
-		
-		//3
-		System.out.println("Nombre de méthodes : " + methodCounter);
-				
-		//4
-		System.out.println("Nombre de packages : " + packages.size());
-		
-		System.out.println("Liste des packages : " + packages);
-		
-		//5
-		System.out.println("Nombre moyen de méthodes par classe : "+ methodCounter/classCounter);
-		
-		//6
-		System.out.println("Nombre moyen de lignes de code par méthode : "+ methodLineCounter/methodCounter);
-			
-		//7
-		System.out.println("Nombre moyen d'attributs  par classe : " +attributeCounter/classCounter);
-		
-		//8
-		System.out.println("10% de slasses possédant le plus de méthodes :");		
-		percentOfClassWithManyMethods();
-				
-		//9
-		System.out.println("10% de classes possédant le plus d'attributs :");		
-		percentOfClassWithManyAttributs();		
-				
-		//10	
-		System.out.println("Classe possédants le plus de méthodes ET d'attributs : ");	
-		classWithManyAttributesAndMethods();
-		
-		//11
-		System.out.println("Classe possédants plus que " + X + " méthodes : " + classWithMoreThanXMethods);
-			
-		//12
-		System.out.println("Methodes possédants le plus de code : ");  		
-		percentOfMethodsWithLargestCode();
-		
-		
-		//13
-		System.out.println("Nombre maximum de paramètre : " + maximumMethodParameter);
-		
 
-		
-		Main applet = new Main();
-        applet.init(Classes);
+		 Main applet = new Main();
+	        applet.init(Classes);
 
-		JFrame frame = new JFrame();
-        frame.getContentPane().add(applet);
-        frame.setTitle("TEST");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-		 
-		 
-	
-		 
-		 
-		 
+			JFrame frame = new JFrame();
+	        frame.getContentPane().add(applet);
+	        frame.setTitle("TEST");
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.pack();
+	        frame.setVisible(true);
 	}
 	
 }

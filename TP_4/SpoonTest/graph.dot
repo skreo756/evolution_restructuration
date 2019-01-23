@@ -1,0 +1,15 @@
+strict digraph G {
+  root [ label="root" ];
+  addition [ label="addition" ];
+  operation [ label="operation" ];
+  Division [ label="Division" ];
+  Multiplication [ label="Multiplication" ];
+  Soustraction [ label="Soustraction" ];
+  root -> addition;
+  addition -> operation;
+  root -> operation;
+  operation -> addition;
+  root -> Division;
+  root -> Multiplication;
+  root -> Soustraction;
+}
